@@ -1,0 +1,396 @@
+{
+  "pluginAlias": "SwitchBot",
+  "pluginType": "platform",
+  "singular": true,
+  "customUi": true,
+  "customUiPath": "./dist/homebridge-ui",
+  "headerDisplay": "<p align='center'><img width='100px' src='https://user-images.githubusercontent.com/9875439/102681754-ac2eb800-4189-11eb-8e17-7c47c804484b.png'></p>\n\nThe **SwitchBot** plugin allows you to control SwitchBot Devices. Use the hybrid client (BLE + OpenAPI) or only OpenAPI by supplying an Open Token.",
+  "footerDisplay": "Please raise any issues on our [project page](https://github.com/OpenWonderLabs/homebridge-switchbot/issues).",
+  "schema": {
+    "type": "object",
+    "required": [],
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "default": "SwitchBot"
+      },
+      "openApiToken": {
+        "type": "string",
+        "title": "OpenAPI Token",
+        "description": "SwitchBot OpenAPI token used as a fallback when BLE isn't available. Keep this secret.",
+        "format": "password"
+      },
+      "openApiSecret": {
+        "type": "string",
+        "title": "OpenAPI Secret (optional)",
+        "description": "Optional OpenAPI secret for certain account setups.",
+        "format": "password"
+      },
+      "enableBLE": {
+        "type": "boolean",
+        "title": "Enable BLE (Bluetooth)",
+        "description": "Enable or disable BLE (Bluetooth Low Energy) support. If disabled, only OpenAPI (cloud) will be used.",
+        "default": true
+      },
+      "nodeSwitchBotLogLevel": {
+        "type": "integer",
+        "title": "Node-SwitchBot Log Level",
+        "description": "Controls logs from the Node-SwitchBot library. Default is Warning (2).",
+        "default": 2,
+        "oneOf": [
+          {
+            "const": 0,
+            "title": "None"
+          },
+          {
+            "const": 1,
+            "title": "Error"
+          },
+          {
+            "const": 2,
+            "title": "Warning"
+          },
+          {
+            "const": 3,
+            "title": "Info"
+          },
+          {
+            "const": 4,
+            "title": "Debug"
+          }
+        ]
+      },
+      "co2AbnormalThreshold": {
+        "type": "integer",
+        "title": "CO2 Detected Threshold (ppm)",
+        "description": "Meter Pro (CO2) only. At or above this level HomeKit reports carbon dioxide as detected.",
+        "default": 1000,
+        "minimum": 400,
+        "maximum": 5000
+      },
+      "devices": {
+        "type": "array",
+        "title": "Devices",
+        "description": "List of SwitchBot devices to manage. Use the UI to add devices and copy device IDs.",
+        "items": {
+          "type": "object",
+          "required": [
+            "deviceId",
+            "configDeviceType"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "Enable or disable this device without removing it from the config.",
+              "default": true
+            },
+            "configDeviceName": {
+              "type": "string",
+              "title": "Name",
+              "description": "Friendly name for this device as shown in HomeKit/Matter."
+            },
+            "deviceId": {
+              "type": "string",
+              "title": "Device ID",
+              "description": "The SwitchBot device identifier (MAC or SwitchBot Cloud deviceId). Use the plugin UI to copy this."
+            },
+            "configDeviceType": {
+              "type": "string",
+              "title": "Device Type",
+              "description": "Select the device type so the plugin can expose the correct HomeKit/Matter services and characteristics.",
+              "enum": [
+                "Blind Tilt",
+                "Curtain",
+                "Curtain3",
+                "Roller Shade",
+                "Keypad",
+                "Keypad Touch",
+                "Keypad Vision",
+                "Keypad Vision Pro",
+                "Lock Vision Pro",
+                "Lock Lite",
+                "Smart Lock",
+                "Smart Lock Pro",
+                "Smart Lock Ultra",
+                "Video Doorbell",
+                "Contact Sensor",
+                "Motion Sensor",
+                "Presence Sensor",
+                "Water Detector",
+                "Candle Warmer Lamp",
+                "Ceiling Light",
+                "Ceiling Light Pro",
+                "Color Bulb",
+                "Floor Lamp",
+                "Permanent Outdoor Lights",
+                "RGBIC Neon Rope Light",
+                "RGBIC Neon Wire Rope Light",
+                "RGBICWW Floor Lamp",
+                "RGBICWW Strip Light",
+                "Strip Light",
+                "Strip Light 3",
+                "Air Purifier PM2.5",
+                "Air Purifier Table PM2.5",
+                "Air Purifier VOC",
+                "Air Purifier Table VOC",
+                "Battery Circulator Fan",
+                "Circulator Fan",
+                "Humidifier",
+                "Humidifier2",
+                "Meter",
+                "MeterPlus",
+                "Meter Plus",
+                "MeterPro",
+                "Meter Pro",
+                "MeterPro(CO2)",
+                "Meter Pro (CO2)",
+                "Smart Radiator Thermostat",
+                "Standing Circulator Fan",
+                "WoIOSensor",
+                "Garage Door Opener",
+                "Plug",
+                "Plug Mini (EU)",
+                "Plug Mini (JP)",
+                "Plug Mini (US)",
+                "Relay Switch 1",
+                "Relay Switch 1PM",
+                "Relay Switch 2PM",
+                "K10+",
+                "K10+ Pro",
+                "Robot Vacuum Cleaner K10+ Pro Combo",
+                "Robot Vacuum Cleaner K11+",
+                "Robot Vacuum Cleaner K20 Plus Pro",
+                "Robot Vacuum Cleaner S1",
+                "Robot Vacuum Cleaner S1 Plus",
+                "Robot Vacuum Cleaner S10",
+                "Robot Vacuum Cleaner S20",
+                "AI Hub",
+                "Hub",
+                "Hub 2",
+                "Hub 3",
+                "Hub Mini",
+                "Hub Plus",
+                "Indoor Cam",
+                "Pan/Tilt Cam",
+                "Pan/Tilt Cam 2K",
+                "Pan/Tilt Cam Plus 2K",
+                "Pan/Tilt Cam Plus 3K",
+                "Air Conditioner",
+                "Air Purifier",
+                "Camera",
+                "DVD",
+                "Fan",
+                "Light",
+                "Others",
+                "Projector",
+                "Set Top Box",
+                "Speaker",
+                "Streamer",
+                "TV",
+                "Vacuum Cleaner",
+                "Water Heater",
+                "AI Art Frame",
+                "Bot",
+                "Home Climate Panel",
+                "Remote",
+                "remote with screen"
+              ]
+            },
+            "botDisplay": {
+              "type": "string",
+              "title": "Bot HomeKit Display",
+              "description": "For a Bot only: choose its HomeKit service. This changes the Home app presentation, not the Bot's physical mode. The Bot cannot measure the position or state of the device it presses.",
+              "enum": [
+                "switch",
+                "door",
+                "garagedoor",
+                "window",
+                "windowcovering",
+                "lock",
+                "outlet",
+                "fan",
+                "faucet",
+                "stateful"
+              ],
+              "default": "switch"
+            },
+            "mode": {
+              "type": "string",
+              "title": "Bot Physical Mode",
+              "description": "For a Bot only: match its mode in the SwitchBot app. Press sends one press and returns the HomeKit control to its resting state. Switch sends turnOn/turnOff. Legacy Multi-Press currently sends one press. If unset, Door uses Press and other displays use Switch.",
+              "enum": [
+                "",
+                "press",
+                "switch",
+                "multipress"
+              ],
+              "default": ""
+            },
+            "connectionPreference": {
+              "type": "string",
+              "title": "Connection Preference",
+              "description": "Select whether this device should prefer BLE, OpenAPI, or auto-detect (hybrid).",
+              "enum": [
+                "auto",
+                "ble",
+                "openapi"
+              ],
+              "default": "auto"
+            },
+            "room": {
+              "type": "string",
+              "title": "Room",
+              "description": "Optional room/location metadata for the device."
+            },
+            "encryptionKey": {
+              "type": "string",
+              "title": "BLE Encryption Key",
+              "description": "(Advanced) Optional BLE encryption key for this device. Required for some locks, relays, air purifiers, and light strips. See plugin docs for how to obtain this key.",
+              "format": "password"
+            },
+            "keyId": {
+              "type": "string",
+              "title": "BLE Key ID",
+              "description": "(Advanced) Optional BLE key ID for this device (usually 2 hex characters, e.g. 'ff'). Only required for some locks."
+            },
+            "refreshRate": {
+              "type": "integer",
+              "title": "OpenAPI Polling Interval (seconds)",
+              "description": "How often to poll this device via OpenAPI for status (in seconds). Overrides platform value if set. Default: 300 (5 minutes). Minimum: 30.",
+              "default": 300,
+              "minimum": 30
+            }
+          }
+        }
+      }
+    },
+    "openApiRefreshRate": {
+      "type": "integer",
+      "title": "OpenAPI Polling Interval (seconds)",
+      "description": "How often to poll devices via OpenAPI for status (in seconds). Default: 300 (5 minutes). Minimum: 30. Can be overridden per device.",
+      "default": 300,
+      "minimum": 30
+    },
+    "matterBatchEnabled": {
+      "type": "boolean",
+      "title": "Enable Batched OpenAPI Polling",
+      "description": "If enabled, the platform will poll all OpenAPI devices in a single batch at the configured interval. Devices with per-device refreshRate are excluded from the batch.",
+      "default": true
+    },
+    "matterBatchRefreshRate": {
+      "type": "integer",
+      "title": "OpenAPI Batch Polling Interval (seconds)",
+      "description": "Interval for batched OpenAPI polling (in seconds). Falls back to openApiRefreshRate if not set. Default: 300.",
+      "default": 300,
+      "minimum": 30
+    },
+    "dailyApiLimit": {
+      "type": "integer",
+      "title": "OpenAPI Daily Request Limit",
+      "description": "Maximum OpenAPI requests per day allowed by the plugin. Default: 10000.",
+      "default": 10000,
+      "minimum": 1000
+    },
+    "dailyApiReserveForCommands": {
+      "type": "integer",
+      "title": "OpenAPI Reserve for Commands",
+      "description": "Requests reserved for user actions (commands/webhooks). When remaining budget reaches this value, background polling pauses. Default: 1000.",
+      "default": 1000,
+      "minimum": 0
+    },
+    "dailyApiResetLocalMidnight": {
+      "type": "boolean",
+      "title": "Reset OpenAPI Counter at Local Midnight",
+      "description": "If true, resets the daily OpenAPI request counter at local midnight. If false, resets at UTC midnight.",
+      "default": false
+    },
+    "webhookOnlyOnReserve": {
+      "type": "boolean",
+      "title": "Only Allow Webhooks on Reserve",
+      "description": "When remaining OpenAPI budget reaches the reserve, only webhooks and user commands are allowed. Background polling/discovery pauses.",
+      "default": false
+    },
+    "matterBatchConcurrency": {
+      "type": "integer",
+      "title": "OpenAPI Batch Concurrency",
+      "description": "Maximum number of parallel OpenAPI status calls during a batch. Default: 5.",
+      "default": 5,
+      "minimum": 1
+    },
+    "matterBatchJitter": {
+      "type": "integer",
+      "title": "OpenAPI Batch Jitter (seconds)",
+      "description": "Random startup delay before the first batch to reduce synchronized spikes. Default: 0.",
+      "default": 0,
+      "minimum": 0
+    },
+    "enableMatter": {
+      "type": "boolean",
+      "title": "Enable Matter Support (Override)",
+      "description": "Manually enable Matter support. By default, Matter is auto-detected from the child bridge configuration. Only change this if you need to override the auto-detection."
+    },
+    "preferMatter": {
+      "type": "boolean",
+      "title": "Prefer Matter when available",
+      "description": "If enabled and Matter is available, devices will be presented as Matter accessories where supported (instead of HAP)."
+    },
+    "blePollingEnabled": {
+      "type": "boolean",
+      "title": "Enable BLE Polling Fallback",
+      "description": "If enabled, the plugin will periodically poll BLE devices for status as a safety net in addition to real-time notifications. This helps recover from missed notifications or connection loss. Recommended for reliability. Can be overridden per device.",
+      "default": true
+    },
+    "blePollIntervalMs": {
+      "type": "integer",
+      "title": "BLE Polling Interval (ms)",
+      "description": "How often to poll BLE devices for status (in milliseconds). Default is 600000 (10 minutes). Set higher to reduce battery drain. Minimum 60000 (1 minute). Can be overridden per device.",
+      "default": 600000,
+      "minimum": 60000
+    }
+  },
+  "layout": [
+    {
+      "type": "fieldset",
+      "title": "API Credentials",
+      "expandable": false,
+      "items": [
+        "name",
+        "openApiToken",
+        "openApiSecret"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Devices",
+      "expandable": false,
+      "items": [
+        "devices"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Advanced Settings",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        "enableMatter",
+        "preferMatter",
+        "nodeSwitchBotLogLevel",
+        "blePollingEnabled",
+        "blePollIntervalMs",
+        "openApiRefreshRate",
+        "matterBatchEnabled",
+        "matterBatchRefreshRate",
+        "dailyApiLimit",
+        "dailyApiReserveForCommands",
+        "dailyApiResetLocalMidnight",
+        "webhookOnlyOnReserve",
+        "matterBatchConcurrency",
+        "matterBatchJitter",
+        "co2AbnormalThreshold"
+      ]
+    }
+  ]
+}
