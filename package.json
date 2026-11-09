@@ -91,7 +91,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@homebridge/plugin-ui-utils": "^2.2.6",
+    "@homebridge/plugin-ui-utils": "^2.2.7",
     "class-validator": "^0.15.1",
     "node-switchbot": "^6.0.5"
   },
